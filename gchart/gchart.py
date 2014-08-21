@@ -11,8 +11,10 @@ from mako.lookup import TemplateLookup
 
 from gviz_api import DataTable
 
+templates = '%s/../templates' % os.path.dirname(__file__)
+
 mylookup = TemplateLookup(
-    directories=['templates'],
+    directories=[templates],
     output_encoding='utf-8',
     encoding_errors='replace'
 )
