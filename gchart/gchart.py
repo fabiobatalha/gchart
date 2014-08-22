@@ -89,5 +89,5 @@ class Pie(GChart):
 
 class Line(GChart):
 
-    _allowed_options = ['title', 'legend', 'width', 'heigth', 'series', 'hAxis', 'vAxis']
+    _allowed_options = ['title', 'legend', 'width', 'heigth', 'series', 'hAxis', 'vAxis', 'domainAxis']
     tpl = 'line.tpl'
