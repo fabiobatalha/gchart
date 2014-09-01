@@ -91,3 +91,9 @@ class Line(GChart):
 
     _allowed_options = ['title', 'legend', 'width', 'heigth', 'series', 'hAxis', 'vAxis', 'domainAxis', 'curveType', 'pointSize']
     tpl = 'line.tpl'
+
+
+class List(GChart):
+
+    _allowed_options = ['title', 'legend', 'witdh', 'heigth' 'showRowNumber']
+    tpl = 'list.tpl'
