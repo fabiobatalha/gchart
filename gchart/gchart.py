@@ -95,5 +95,5 @@ class Line(GChart):
 
 class List(GChart):
 
-    _allowed_options = ['title', 'legend', 'width', 'heigth' 'showRowNumber']
+    _allowed_options = ['title', 'legend', 'width', 'heigth', 'alternatingRowStyle', 'allowHtml', 'page', 'pageSize', 'showRowNumber']
     tpl = 'list.tpl'
