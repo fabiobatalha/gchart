@@ -51,23 +51,19 @@ class Ratchet():
     def __init__(self, ratchetclient):
         self.ratchetclient = ratchetclient
 
-    @cache_region.cache_on_arguments()
-    def general_year_month_lines_chart(self, code):
-
-        values = self.ratchetclient.query('general').filter(code=code).next()
+    def _general_year_month_lines_chart_to_gviz_data(self, accesses):
+        del accesses['total']
+        del accesses['code']
 
         description = [
             ('months', 'string', 'months'),
         ]
 
-        del values['total']
-        del values['code']
-
         empty_months_range = {'%02d' % x: 0 for x in range(1, 13)}
         # Creating dict year that represents the sum of accesses of all available years
         # separated by months for the pages sci_arttext and download
         years = {}
-        for key, value in values.items():
+        for key, value in accesses.items():
             if key in ['fulltext', 'abstract', 'download']:
                 del value['total']
                 for year, months in value.items():
@@ -90,9 +86,46 @@ class Ratchet():
 
         return description, data
 
+    def _general_source_page_pie_chart_to_gviz_data(self, accesses):
+
+        description = [
+            ('source', 'string', 'source page'),
+            ('accesses', 'number', 'accesses'),
+        ]
+
+        if 'code' in accesses:
+            del(accesses['code'])
+        if 'total' in accesses:
+            del(accesses['total'])
+        if 'type' in accesses:
+            del(accesses['type'])
+        if 'page' in accesses:
+            del(accesses['code'])
+        if 'pdf' in accesses:
+            del(accesses['pdf'])
+
+        data = []
+        for key, value in accesses.items():
+
+            if key[0] != 'y':
+                data.append([key, value['total']])
+
+        return description, data
+
     def _journals_list_to_gviz_data(self, journals):
 
-        lines = []
+        description = [
+            ('journal_title', 'string', 'journal'),
+            ('journal_issn', 'string', 'issn'),
+            ('downloads', 'number', 'fulltext PDF'),
+            ('fulltext', 'number', 'fulltext HTML'),
+            ('abstract', 'number', 'abstract'),
+            ('issue', 'number', 'table of contents'),
+            ('home', 'number', 'journal home'),
+            ('total', 'number')
+        ]
+
+        data = []
         for issn, journal in journals.items():
             line = []
             downloads = journal['accesses'].get('download', {'total': 0})['total']
@@ -109,9 +142,26 @@ class Ratchet():
             line.append(home)
             line.append(downloads+fulltexts+abstracts+issue+home)
 
-            lines.append(line)
+            data.append(line)
 
-        return lines
+        return description, data
+
+    @cache_region.cache_on_arguments()
+    def general_year_month_lines_chart(self, code):
+
+        accesses = self.ratchetclient.query('general').filter(code=code).next()
+
+        description, data = self._general_year_month_lines_chart_to_gviz_data(accesses)
+
+        return description, data
+
+    @cache_region.cache_on_arguments()
+    def general_source_page_pie_chart(self, code):
+        accesses = self.ratchetclient.query('general').filter(code=code).next()
+
+        description, data = self._general_source_page_pie_chart_to_gviz_data(accesses)
+
+        return description, data
 
     @cache_region.cache_on_arguments()
     def journals_list(self):
@@ -124,17 +174,6 @@ class Ratchet():
                 jn['accesses'] = journal
                 jn['metadata'] = xylose_journal
 
-        description = [
-            ('journal_title', 'string', 'journal'),
-            ('journal_issn', 'string', 'issn'),
-            ('downloads', 'number', 'fulltext PDF'),
-            ('fulltext', 'number', 'fulltext HTML'),
-            ('abstract', 'number', 'abstract'),
-            ('issue', 'number', 'table of contents'),
-            ('home', 'number', 'journal home'),
-            ('total', 'number')
-        ]
-
-        data = self._journals_list_to_gviz_data(journals)
+        description, data = self._journals_list_to_gviz_data(journals)
 
         return description, data
