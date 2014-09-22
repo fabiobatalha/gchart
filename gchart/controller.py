@@ -51,20 +51,19 @@ class Ratchet():
     def __init__(self, ratchetclient):
         self.ratchetclient = ratchetclient
 
-    def _general_year_month_lines_chart_to_gviz_data(self, accesses):
+    def _general_article_year_month_lines_chart_to_gviz_data(self, accesses):
+
         del accesses['total']
         del accesses['code']
 
-        description = [
-            ('months', 'string', 'months'),
-        ]
+        description = [('months', 'string', 'months')]
 
         empty_months_range = {'%02d' % x: 0 for x in range(1, 13)}
         # Creating dict year that represents the sum of accesses of all available years
         # separated by months for the pages sci_arttext and download
         years = {}
         for key, value in accesses.items():
-            if key in ['fulltext', 'abstract', 'download']:
+            if key in ['html', 'abstract', 'pdf']:
                 del value['total']
                 for year, months in value.items():
                     del months['total']
@@ -101,8 +100,8 @@ class Ratchet():
             del(accesses['type'])
         if 'page' in accesses:
             del(accesses['code'])
-        if 'pdf' in accesses:
-            del(accesses['pdf'])
+        if 'other' in accesses:
+            del(accesses['other'])
 
         data = []
         for key, value in accesses.items():
@@ -117,7 +116,7 @@ class Ratchet():
         description = [
             ('journal_title', 'string', 'journal'),
             ('journal_issn', 'string', 'issn'),
-            ('downloads', 'number', 'fulltext PDF'),
+            ('pdf', 'number', 'fulltext PDF'),
             ('fulltext', 'number', 'fulltext HTML'),
             ('abstract', 'number', 'abstract'),
             ('issue', 'number', 'table of contents'),
@@ -128,26 +127,26 @@ class Ratchet():
         data = []
         for issn, journal in journals.items():
             line = []
-            downloads = journal['accesses'].get('download', {'total': 0})['total']
-            fulltexts = journal['accesses'].get('fulltext', {'total': 0})['total']
+            pdf = journal['accesses'].get('pdf', {'total': 0})['total']
+            html = journal['accesses'].get('html', {'total': 0})['total']
             abstracts = journal['accesses'].get('abstract', {'total': 0})['total']
             issue = journal['accesses'].get('toc', {'total': 0})['total']
             home = journal['accesses'].get('journal', {'total': 0})['total']
             line.append(journal['metadata'].scielo_issn)
             line.append(journal['metadata'].title)
-            line.append(downloads)
-            line.append(fulltexts)
+            line.append(pdf)
+            line.append(html)
             line.append(abstracts)
             line.append(issue)
             line.append(home)
-            line.append(downloads+fulltexts+abstracts+issue+home)
+            line.append(pdf+html+abstracts+issue+home)
 
             data.append(line)
 
         return description, data
 
     @cache_region.cache_on_arguments()
-    def general_year_month_lines_chart(self, code):
+    def general_article_year_month_lines_chart(self, code):
 
         accesses = self.ratchetclient.query('general').filter(code=code).next()
 
