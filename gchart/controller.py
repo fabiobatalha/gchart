@@ -150,7 +150,7 @@ class Ratchet():
 
         accesses = self.ratchetclient.query('general').filter(code=code).next()
 
-        description, data = self._general_year_month_lines_chart_to_gviz_data(accesses)
+        description, data = self._general_article_year_month_lines_chart_to_gviz_data(accesses)
 
         return description, data
 
