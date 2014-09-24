@@ -102,6 +102,8 @@ class Ratchet():
             del(accesses['code'])
         if 'other' in accesses:
             del(accesses['other'])
+        if 'journal' in accesses and not is_instance(journal, dict):
+            del(accesses['other'])
 
         data = []
         for key, value in accesses.items():
