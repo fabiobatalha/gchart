@@ -104,6 +104,9 @@ class Ratchet():
             del(accesses['other'])
         if 'journal' in accesses and not isinstance(accesses['journal'], dict):
             del(accesses['journal'])
+        if 'article' in accesses and not isinstance(accesses['article'], dict):
+            del(accesses['article'])
+
 
         data = []
         for key, value in accesses.items():
