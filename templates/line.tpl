@@ -13,7 +13,7 @@
     function drawVisualization() {
       var container = document.getElementById('visualization_div');
       visualization = new google.visualization.LineChart(container);
-      new google.visualization.Query('http://localhost:6543/general/lines/data?code=scl').
+      new google.visualization.Query('http://localhost:6543/general/lines/data?code=scl&reqId=0').
           send(queryCallback);
     }
 
