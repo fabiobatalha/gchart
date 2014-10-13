@@ -39,7 +39,7 @@ class GChart(object):
         self.options(**options)
         self._importjs = importjs
 
-        if isinstance(data, str):
+        if isinstance(data, str) or isinstance(data, unicode):
             self._jsondata = data
             self._jsondatasource = 'url'
         else:
