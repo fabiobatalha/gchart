@@ -19,7 +19,7 @@
           new google.visualization.Query('${jsondata}').send(queryCallback);
         }
         function queryCallback(response) {
-          visualization.draw(response.getDataTable(), {is3D: true});
+          visualization.draw(response.getDataTable(), options);
         }
     % endif
 
