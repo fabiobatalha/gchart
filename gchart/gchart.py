@@ -37,10 +37,14 @@ class GChart(object):
     def __init__(self, description, data, options, importjs=False):
         self._options = {'width': 500, 'height': 500}
         self.options(**options)
-        data_table = DataTable(description)
-        data_table.LoadData(data)
-        self._jsoncode = data_table.ToJSon()
         self._importjs = importjs
+
+        if isinstance(data, str):
+            self._jsoncode = data
+        else:
+            data_table = DataTable(description)
+            data_table.LoadData(data)
+            self._jsoncode = data_table.ToJSon()
 
     @property
     def _data(self):
@@ -55,8 +59,8 @@ class GChart(object):
 
     @property
     def data_table_response(self):
-
-        return u'google.visualization.Query.setResponse(%s);' % self._jsoncode
+        header = {'status': 'ok', 'table': self._jsoncode}
+        return u'google.visualization.Query.setResponse(%s);' % header
 
     @property
     def optionstojs(self):
