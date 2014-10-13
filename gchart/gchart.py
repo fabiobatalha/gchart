@@ -59,8 +59,10 @@ class GChart(object):
 
     @property
     def data_table_response(self):
-        header = {'status': 'ok', 'table': self._jsoncode}
-        return u'google.visualization.Query.setResponse(%s);' % header
+
+        header = {'status': 'ok', 'table': json.loads(self._jsoncode)}
+
+        return u'google.visualization.Query.setResponse(%s);' % self._jsoncode
 
     @property
     def optionstojs(self):
