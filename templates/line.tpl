@@ -2,26 +2,15 @@
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 % endif
 <script type="text/javascript">
-    google.load("visualization", "1", {packages:["corechart"]});
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    ${jscode}
 
-    var visualization;
+    ${options}
 
-    function draw() {
-      drawVisualization();
-    }
-
-    function drawVisualization() {
-      var container = document.getElementById('visualization_div');
-      visualization = new google.visualization.LineChart(container);
-      new google.visualization.Query('http://localhost:6543/general/lines/data?code=scl&reqId=1281812').send(queryCallback);
-    }
-
-    function queryCallback(response) {
-      visualization.draw(response.getDataTable());
-    }
-
-    
-    google.setOnLoadCallback(draw);
-
+    var jscode_table = new google.visualization.LineChart(document.getElementById('chart'));
+    jscode_table.draw(${id}, options);
+  }
 </script>
-<div id="visualization_div"></div>
+<div id="chart"></div>
