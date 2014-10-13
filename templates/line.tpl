@@ -11,15 +11,18 @@
     }
 
     function drawVisualization() {
-      visualization = new google.visualization.LineChart(document.getElementById('chart'));
-      new google.visualization.Query('http://localhost:6543/general/lines/data?code=scl').send(queryCallback);
+      var container = document.getElementById('visualization_div');
+      visualization = new google.visualization.LineChart(container);
+      new google.visualization.Query('http://localhost:6543/general/lines/data?code=scl').
+          send(queryCallback);
     }
 
     function queryCallback(response) {
       visualization.draw(response.getDataTable());
     }
+
     
     google.setOnLoadCallback(draw);
 
 </script>
-<div id="chart"></div>
+<div id="visualization_div"></div>
