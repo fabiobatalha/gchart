@@ -17,7 +17,7 @@
     }
 
     function queryCallback(response) {
-      visualization.draw(response.getDataTable(), ${options});
+      visualization.draw(response.getDataTable());
     }
 
     
