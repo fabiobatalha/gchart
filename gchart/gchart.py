@@ -54,6 +54,11 @@ class GChart(object):
         return data
 
     @property
+    def data_table_response(self):
+
+        return u'google.visualization.Query.setResponse(%s);' % self._jsoncode
+
+    @property
     def optionstojs(self):
         return 'var options = %s' % json.dumps(self._options)
 
