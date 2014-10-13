@@ -11,8 +11,8 @@
     }
 
     function drawVisualization() {
-      visualization = new google.visualization.PieChart(document.getElementById('chart'));
-      new google.visualization.Query('https://spreadsheets.google.com/tq?key=pCQbetd-CptHnwJEfo8tALA').send(queryCallback);
+      visualization = new google.visualization.LineChart(document.getElementById('chart'));
+      new google.visualization.Query('http://localhost:6543/general/lines/data?code=scl').send(queryCallback);
     }
 
     function queryCallback(response) {
