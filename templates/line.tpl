@@ -13,12 +13,11 @@
     function drawVisualization() {
       var container = document.getElementById('visualization_div');
       visualization = new google.visualization.LineChart(container);
-      new google.visualization.Query('http://localhost:6543/general/lines/data?code=scl&reqId=0').
-          send(queryCallback);
+      new google.visualization.Query('http://localhost:6543/general/lines/data?code=scl&reqId=1281812').send(queryCallback);
     }
 
     function queryCallback(response) {
-      visualization.draw(response.getDataTable());
+      visualization.draw(response.getDataTable(), ${options});
     }
 
     
