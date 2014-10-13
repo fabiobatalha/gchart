@@ -40,19 +40,22 @@ class GChart(object):
         self._importjs = importjs
 
         if isinstance(data, str):
-            self._jsoncode = data
+            self._jsondata = data
+            self._jsondatasource = 'url'
         else:
             data_table = DataTable(description)
             data_table.LoadData(data)
-            self._jsoncode = data_table.ToJSon()
+            self._jsondata = data_table.ToJSon()
+            self._jsondatasource = 'given'
 
     @property
     def _data(self):
 
         data = {
-            'jsondata': self._jsoncode,
             'options': self.optionstojs,
-            'importjs': self._importjs
+            'importjs': self._importjs,
+            'jsondata': self._jsondata,
+            'jsondatasource': self._jsondatasource
         }
 
         return data

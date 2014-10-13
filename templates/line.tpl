@@ -2,16 +2,27 @@
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 % endif
 <script type="text/javascript">
-  google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(drawChart);
-  function drawChart() {
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawVisualization);
 
-    ${options}
+    % if jsondatasource=='given':
+        function drawVisualization() {
+        ${options}
+        var visualization = new google.visualization.LineChart(document.getElementById('chart'));
+        var data = new google.visualization.DataTable(${jsondata});
+        visualization.draw(data, options);
 
-    var json_chart = new google.visualization.LineChart(document.getElementById('chart'));
-    var json_chart_data = new google.visualization.DataTable(${jsondata});
-    json_chart.draw(json_chart_data, options);
+        }
+    % elif jsondatasource=='url':
+        function drawVisualization() {
+          visualization = new google.visualization.LineChart(document.getElementById('chart'));
+          new google.visualization.Query('https://spreadsheets.google.com/tq?key=pCQbetd-CptHnwJEfo8tALA').
+              send(queryCallback);
+        }
+        function queryCallback(response) {
+          visualization.draw(response.getDataTable(), {is3D: true});
+        }
+    % endif
 
-  }
 </script>
 <div id="chart"></div>
