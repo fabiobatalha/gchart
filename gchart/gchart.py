@@ -36,20 +36,18 @@ class GChart(object):
 
     def __init__(self, description, data, options, importjs=False):
         self._options = {'width': 500, 'height': 500}
-        self._id = base64.b64encode(str(uuid.uuid4()), altchars=['_', '_'])
         self.options(**options)
         data_table = DataTable(description)
         data_table.LoadData(data)
+        self._jsoncode = data_table.ToJSon()
         self._importjs = importjs
-        self._jscode = data_table.ToJSCode(self._id)
 
     @property
     def _data(self):
 
         data = {
-            'jscode': self._jscode,
+            'jsondata': self._jsoncode,
             'options': self.optionstojs,
-            'id': self._id,
             'importjs': self._importjs
         }
 

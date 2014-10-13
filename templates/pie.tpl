@@ -5,12 +5,13 @@
   google.load("visualization", "1", {packages:["corechart"]});
   google.setOnLoadCallback(drawChart);
   function drawChart() {
-    ${jscode}
 
     ${options}
 
-    var jscode_table = new google.visualization.PieChart(document.getElementById('chart'));
-    jscode_table.draw(${id}, options);
+    var json_chart = new google.visualization.PieChart(document.getElementById('chart'));
+    var json_chart_data = new google.visualization.DataTable(${jsondata});
+    json_chart.draw(json_chart_data, options);
+
   }
 </script>
 <div id="chart"></div>
