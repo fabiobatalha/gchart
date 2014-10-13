@@ -16,8 +16,7 @@
     % elif jsondatasource=='url':
         function drawVisualization() {
           visualization = new google.visualization.LineChart(document.getElementById('chart'));
-          new google.visualization.Query('https://spreadsheets.google.com/tq?key=pCQbetd-CptHnwJEfo8tALA').
-              send(queryCallback);
+          new google.visualization.Query(${jsondata}).send(queryCallback);
         }
         function queryCallback(response) {
           visualization.draw(response.getDataTable(), {is3D: true});
