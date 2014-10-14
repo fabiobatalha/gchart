@@ -10,7 +10,7 @@
     % if jsondatasource=='given':
         function drawVisualization() {
         
-        var visualization = new google.visualization.Table(document.getElementById('chart'));
+        var visualization = new google.visualization.Table(document.getElementById('table'));
         var data = new google.visualization.DataTable(${jsondata});
         visualization.draw(data, options);
 
@@ -22,7 +22,7 @@
           query.send(queryCallback);
         }
         function queryCallback(response) {
-          visualization = new google.visualization.Table(document.getElementById('chart'));
+          visualization = new google.visualization.Table(document.getElementById('table'));
           visualization.draw(response.getDataTable(), options);
         }
 
