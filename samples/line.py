@@ -27,9 +27,9 @@ if __name__ == '__main__':
 
     gchart.deploy(
         gchart.Line,
-        description,
         data,
-        options,
+        description=description,
+        options=options,
         importjs=True,
         render=True
     )

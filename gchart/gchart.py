@@ -20,9 +20,13 @@ mylookup = TemplateLookup(
 )
 
 
-def deploy(mode, description, data, options, importjs=False, render=False):
+def deploy(mode, data, description=None, options=None, importjs=False, render=False):
 
-    obj = mode(description, data, options, importjs=importjs)
+    options = options or {}
+    description = description or []
+    data = data or []
+
+    obj = mode(data, description, options, importjs=importjs)
 
     if render:
         obj.render()
@@ -34,16 +38,17 @@ class GChart(object):
 
     _allowed_options = ['title', 'legend', 'width', 'heigth']
 
-    def __init__(self, description, data, options, importjs=False):
+    def __init__(self, data, description, options, importjs=False):
         self._options = {'width': 500, 'height': 500}
         self.options(**options)
         self._importjs = importjs
-
+        self._description = description
+        self._dat = data
         if isinstance(data, str) or isinstance(data, unicode):
             self._jsondata = data
             self._jsondatasource = 'url'
         else:
-            data_table = DataTable(description)
+            data_table = DataTable(self._description)
             data_table.LoadData(data)
             self._jsondata = data_table.ToJSon()
             self._jsondatasource = 'given'
@@ -60,9 +65,10 @@ class GChart(object):
 
         return data
 
-    def data_table_response(self, reqId=0):
-
-        return u'google.visualization.Query.setResponse({"status": "ok", "table": %s, "reqId": %s});' % (self._jsondata, reqId)
+    def data_table_response(self, req_id=0):
+        data_table = DataTable(self._description)
+        data_table.LoadData(self._dat)
+        return data_table.ToJSonResponse(req_id=req_id)
 
     @property
     def optionstojs(self):

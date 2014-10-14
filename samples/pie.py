@@ -28,9 +28,9 @@ if __name__ == '__main__':
 
     gchart.deploy(
         gchart.Pie,
-        description,
         data,
-        options,
+        description=description,
+        options=options,
         importjs=True,
         render=True
     )
