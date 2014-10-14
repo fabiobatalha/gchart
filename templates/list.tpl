@@ -2,7 +2,7 @@
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 % endif
 <script type="text/javascript">
-    google.load("visualization", "1", {packages:["corechart"]});
+    google.load("visualization", "1", {packages:["table"]});
     google.setOnLoadCallback(drawVisualization);
 
     ${options}
