@@ -3,16 +3,16 @@
 % endif
 <script type="text/javascript">
     google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawVisualization-${id});
+    google.setOnLoadCallback(drawVisualization-_${id});
     % if jsondatasource=='given':
-        function drawVisualization-${id}() {
+        function drawVisualization_${id}() {
           ${options}
           var visualization = new google.visualization.PieChart(document.getElementById('chart-${id}'));
           var data = new google.visualization.DataTable(${jsondata});
           visualization.draw(data, options);
         }
     % elif jsondatasource=='url':
-        function drawVisualization-${id}() {
+        function drawVisualization_${id}() {
           query = new google.visualization.Query('${jsondata}');
           query.send(queryCallback);
         }
