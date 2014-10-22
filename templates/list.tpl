@@ -17,7 +17,6 @@
         }
     % elif jsondatasource=='url':
         function drawVisualization() {
-          drawToolbar();
           query = new google.visualization.Query('${jsondata}');
           query.send(queryCallback);
         }
@@ -25,14 +24,6 @@
           visualization = new google.visualization.Table(document.getElementById('table'));
           visualization.draw(response.getDataTable(), options);
         }
-
-        function drawToolbar() {
-          var components = [
-              {type: 'html', datasource: '${jsondata}'},
-              {type: 'csv', datasource: '${jsondata}'}
-          ];
-          google.visualization.drawToolbar(document.getElementById('toolbar'), components);
-        };
     % endif
 
 </script>
