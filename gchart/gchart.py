@@ -4,7 +4,7 @@ import os
 import webbrowser
 import json
 import uuid
-import base64
+import random
 
 from mako.template import Template
 from mako.lookup import TemplateLookup
@@ -61,7 +61,7 @@ class GChart(object):
             'importjs': self._importjs,
             'jsondata': self._jsondata,
             'jsondatasource': self._jsondatasource,
-            'id': range(256)
+            'id': random.randrange(255)
         }
 
         return data
