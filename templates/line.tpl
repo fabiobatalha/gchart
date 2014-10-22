@@ -3,21 +3,21 @@
 % endif
 <script type="text/javascript">
     google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawVisualization);
-    ${options}
+    google.setOnLoadCallback(drawVisualization-${id});
     % if jsondatasource=='given':
-        function drawVisualization() {
-        var visualization = new google.visualization.LineChart(document.getElementById('chart-${id}'));
-        var data = new google.visualization.DataTable(${jsondata});
-        visualization.draw(data, options);
-
+        function drawVisualization-${id}() {
+          ${options}
+          var visualization = new google.visualization.LineChart(document.getElementById('chart-${id}'));
+          var data = new google.visualization.DataTable(${jsondata});
+          visualization.draw(data, options);
         }
     % elif jsondatasource=='url':
-        function drawVisualization() {
+        function drawVisualization-${id}() {
           query = new google.visualization.Query('${jsondata}');
           query.send(queryCallback);
         }
         function queryCallback(response) {
+          ${options}
           visualization = new google.visualization.LineChart(document.getElementById('chart-${id}'));
           visualization.draw(response.getDataTable(), options);
         }
