@@ -3,7 +3,7 @@
 % endif
 <script type="text/javascript">
     google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawVisualization-_${id});
+    google.setOnLoadCallback(drawVisualization_${id});
     % if jsondatasource=='given':
         function drawVisualization_${id}() {
           ${options}
