@@ -60,7 +60,8 @@ class GChart(object):
             'options': self.optionstojs,
             'importjs': self._importjs,
             'jsondata': self._jsondata,
-            'jsondatasource': self._jsondatasource
+            'jsondatasource': self._jsondatasource,
+            'id': range(256)
         }
 
         return data

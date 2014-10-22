@@ -8,7 +8,7 @@
     % if jsondatasource=='given':
         function drawVisualization() {
         
-        var visualization = new google.visualization.PieChart(document.getElementById('chart'));
+        var visualization = new google.visualization.PieChart(document.getElementById('chart-${id}'));
         var data = new google.visualization.DataTable(${jsondata});
         visualization.draw(data, options);
 
@@ -19,10 +19,10 @@
           query.send(queryCallback);
         }
         function queryCallback(response) {
-          visualization = new google.visualization.PieChart(document.getElementById('chart'));
+          visualization = new google.visualization.PieChart(document.getElementById('chart-${id}'));
           visualization.draw(response.getDataTable(), options);
         }
     % endif
 
 </script>
-<div id="chart"></div>
+<div id="chart-${id}"></div>
