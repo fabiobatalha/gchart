@@ -99,13 +99,13 @@ class GChart(object):
 
 class Pie(GChart):
 
-    _allowed_options = ['title', 'legend', 'width', 'heigth', 'is3D', 'pieHole', 'pieSliceText', 'pieStartAngle']
+    _allowed_options = ['title', 'legend', 'width', 'heigth', 'is3D', 'pieHole', 'pieSliceText', 'pieStartAngle', 'chartArea']
     tpl = 'pie.tpl'
 
 
 class Line(GChart):
 
-    _allowed_options = ['title', 'legend', 'width', 'heigth', 'series', 'hAxis', 'vAxis', 'domainAxis', 'curveType', 'pointSize']
+    _allowed_options = ['title', 'legend', 'width', 'heigth', 'series', 'hAxis', 'vAxis', 'domainAxis', 'curveType', 'pointSize', 'chartArea']
     tpl = 'line.tpl'
 
 
