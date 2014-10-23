@@ -1,4 +1,9 @@
 <html>
+  <head>
+    % if importjs:
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    % endif
+  </head>
   <body style="margin: 0px; padding: 0px;">
       <div id="chart-${id}"></div>
       <script type="text/javascript">
@@ -24,8 +29,5 @@
           % endif
 
       </script>
-    % if importjs:
-      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    % endif
   </body>
 </html>
